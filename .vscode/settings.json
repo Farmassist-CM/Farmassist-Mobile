@@ -1,0 +1,13 @@
+{
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.tsserver.log": "verbose",
+	"typescript.tsserver.trace": "verbose",
+	"typescript.preferences.importModuleSpecifier": "non-relative",
+	"typescript.preferences.quoteStyle": "single",
+	"typescript.preferences.trailingComma": "all",
+	"typescript.preferences.useAliasesForRenames": true,
+	"typescript.preferences.useSemicolons": true,
+	"typescript.validate.enable": false,
+	"typescript.maxUnionSize": 100
+}
