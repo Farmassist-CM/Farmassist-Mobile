@@ -16,6 +16,7 @@ const resources: Resource = {
 };
 
 i18n.use(initReactI18next).init({
+	compatibilityJSON: "v3",
 	resources,
 	lng: "fr",
 	fallbackLng: "fr",

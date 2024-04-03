@@ -6,4 +6,5 @@ export const IMAGES = {
 	phone: require("../../assets/images/phone.jpg"),
 	plan: require("../../assets/images/plan.jpg"),
 	icon: require("../../assets/images/app_icon.png"),
+	nothing: require("../../assets/images/nothing.jpg"),
 };

@@ -8,6 +8,6 @@
 	"typescript.preferences.trailingComma": "all",
 	"typescript.preferences.useAliasesForRenames": true,
 	"typescript.preferences.useSemicolons": true,
-	"typescript.validate.enable": false,
+	// "typescript.validate.enable": false,
 	"typescript.maxUnionSize": 100
 }

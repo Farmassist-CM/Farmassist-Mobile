@@ -8,6 +8,9 @@ import { MyRouteStackParamList } from "./interfaces/natigationInterfaces";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import Splash from "./screens/Splash";
+import Register from "./screens/Register";
+import TabNavigator from "./components/TabNavigator";
+import ScanBarCode from "./screens/ScanBarCode";
 
 const Stack = createNativeStackNavigator<MyRouteStackParamList>();
 const AppRouter = () => {
@@ -25,6 +28,15 @@ const AppRouter = () => {
 					<Stack.Screen name="Home" component={Home} />
 					<Stack.Screen name="Login" component={Login} />
 				</Stack.Group>
+				<Stack.Screen name="Register" component={Register} />
+				<Stack.Screen
+					name="Tab"
+					component={TabNavigator}
+					options={{
+						headerShown: false,
+					}}
+				/>
+				<Stack.Screen name="CodeBarScan" component={ScanBarCode} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

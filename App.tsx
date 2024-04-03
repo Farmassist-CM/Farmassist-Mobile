@@ -2,7 +2,9 @@
 
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
+import "intl-pluralrules";
 import "./src/i18n";
+
 import AppRouter from "./src/AppRouter";
 import {
 	GluestackUIProvider,
@@ -11,15 +13,17 @@ import {
 	GluestackUIStyledProvider,
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
-import { NativeBaseProvider } from "native-base";
+import { NativeBaseProvider, useColorMode } from "native-base";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
+import { customTheme } from "./src/utils/theme";
 export default function App() {
 	const { i18n } = useTranslation();
 
 	const changeLanguage = (lng: string) => {
 		i18n.changeLanguage(lng);
 	};
+	const { toggleColorMode } = useColorMode();
 	useEffect(() => {
 		// const l = localStorage.getItem("lang");
 		// console.log("Language ", l);
@@ -29,8 +33,9 @@ export default function App() {
 		// 	}
 		// }
 	}, []);
+
 	return (
-		<NativeBaseProvider>
+		<NativeBaseProvider theme={customTheme}>
 			<AppRouter />
 		</NativeBaseProvider>
 	);
