@@ -8,12 +8,9 @@ import { BarCodeScanningResult, Camera, CameraType } from "expo-camera";
 const ScanBarCode = () => {
 	const [permission, requestPermission] = Camera.useCameraPermissions();
 	console.log("permission", permission?.status);
-	console.log(Camera.Constants.FlashMode);
 
 	useEffect(() => {
-		if (permission?.status !== "granted") {
-			requestPermission();
-		}
+		requestPermission();
 	}, []);
 	const handleCannned = (b: BarCodeScanningResult) => {
 		console.log(b.data);

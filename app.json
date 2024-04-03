@@ -30,12 +30,13 @@
 				"projectId": "f287b126-a64f-47cc-b53c-00fb003b8470"
 			}
 		},
+		"permissions": ["CAMERA"],
 		"plugins": [
 			[
 				"expo-camera",
 				{
-					"cameraPermission": "Allow Farmassist to access your camera",
-					"microphonePermission": "Allow Farmassist to access your microphone",
+					"cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+					"microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
 					"recordAudioAndroid": true
 				}
 			]
