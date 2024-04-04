@@ -17,7 +17,10 @@ import { MyNavigation } from "../../interfaces/natigationInterfaces";
 const Sensors = () => {
 	const navigation = useNavigation<MyNavigation>();
 	return (
-		<ScrollView>
+		<ScrollView
+			_dark={{
+				bg: "dark.200",
+			}}>
 			<View p={10} h={200} bg={"blue.500"}>
 				<HStack display="flex" flexDirection="row" justifyContent={"flex-end"}>
 					<Pressable onPress={() => navigation.push("CodeBarScan")}>

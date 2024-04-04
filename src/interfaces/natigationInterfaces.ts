@@ -13,5 +13,7 @@ export type MyRouteStackParamList = {
 	TabHome: undefined;
 	Tab: undefined;
 	CodeBarScan: undefined;
+	Settings: undefined;
+	EditProfile: undefined;
 };
 export type MyNavigation = NativeStackNavigationProp<MyRouteStackParamList>;

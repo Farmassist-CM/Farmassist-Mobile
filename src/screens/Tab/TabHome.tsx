@@ -5,7 +5,10 @@ import { HStack, Input, ScrollView, Text, VStack, View } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 const TabHome = () => {
 	return (
-		<ScrollView>
+		<ScrollView
+			_dark={{
+				backgroundColor: "dark.200",
+			}}>
 			<VStack justifyContent="space-between" p={8} h={250} bg={"blue.500"}>
 				<Input
 					placeholder="Enter city"

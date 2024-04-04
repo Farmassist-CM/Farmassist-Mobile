@@ -1,13 +1,16 @@
 /** @format */
 
-import { View, Text } from "react-native";
 import React from "react";
+import { ScrollView, Text } from "native-base";
 
 const PlanDiseases = () => {
 	return (
-		<View>
+		<ScrollView
+			_dark={{
+				bg: "dark.200",
+			}}>
 			<Text>PlanDiseases</Text>
-		</View>
+		</ScrollView>
 	);
 };
 

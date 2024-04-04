@@ -11,6 +11,8 @@ import Splash from "./screens/Splash";
 import Register from "./screens/Register";
 import TabNavigator from "./components/TabNavigator";
 import ScanBarCode from "./screens/ScanBarCode";
+import Settings from "./screens/Settings";
+import EditProfile from "./screens/EditProfile";
 
 const Stack = createNativeStackNavigator<MyRouteStackParamList>();
 const AppRouter = () => {
@@ -34,9 +36,12 @@ const AppRouter = () => {
 					component={TabNavigator}
 					options={{
 						headerShown: false,
+						gestureEnabled: false,
 					}}
 				/>
 				<Stack.Screen name="CodeBarScan" component={ScanBarCode} />
+				<Stack.Screen name="Settings" component={Settings} />
+				<Stack.Screen name="EditProfile" component={EditProfile} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

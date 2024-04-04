@@ -1,18 +1,34 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Profile from "../screens/Tab/Profile";
 import TabHome from "../screens/Tab/TabHome";
 import Sensors from "../screens/Tab/Sensors";
 import PlanDiseases from "../screens/Tab/PlanDiseases";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useColorMode } from "native-base";
+import { BackHandler } from "react-native";
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+	const { colorMode } = useColorMode();
+	useEffect(() => {
+		const backHandler = BackHandler.addEventListener(
+			"hardwareBackPress",
+			() => true
+		);
+		return () => backHandler.remove();
+	}, []);
 	return (
 		<Tab.Navigator
 			screenOptions={({ route }) => ({
+				tabBarStyle: {
+					backgroundColor: colorMode == "dark" ? "black" : "white",
+					// paddingVertical: 10,
+					height: 100,
+				},
+				// tabBarActiveBackgroundColor: colorMode === "dark" ? "red" : "white",
 				// headerShown: false,
 				tabBarActiveTintColor: "#52C112",
 				tabBarIcon: ({ focused, color, size }) => {
