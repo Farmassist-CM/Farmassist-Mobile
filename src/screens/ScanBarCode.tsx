@@ -22,13 +22,15 @@ const ScanBarCode = () => {
 	return (
 		<View flex={1}>
 			<VStack flex={1} p={10}>
-				<Camera
-					onBarCodeScanned={handleCannned}
-					type={CameraType.back}
-					style={{
-						// flex: 1,
-						height: 150,
-					}}></Camera>
+				{permission?.status == "granted" && (
+					<Camera
+						onBarCodeScanned={handleCannned}
+						type={CameraType.back}
+						style={{
+							// flex: 1,
+							height: 150,
+						}}></Camera>
+				)}
 			</VStack>
 		</View>
 	);

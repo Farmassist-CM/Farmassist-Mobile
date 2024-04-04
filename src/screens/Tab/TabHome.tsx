@@ -21,6 +21,13 @@ const TabHome = () => {
 					bg="white"
 					backgroundColor={"white"}
 					focusOutlineColor="white"
+					_dark={{
+						borderColor: "white",
+						focusOutlineColor: "white",
+						_input: {
+							color: "dark.100",
+						},
+					}}
 					_input={{
 						bgColor: "white",
 						// outlineStyle: "",

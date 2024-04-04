@@ -3,10 +3,13 @@ import React, { useState } from "react";
 import {
 	Avatar,
 	Box,
+	Fab,
 	HStack,
+	Icon,
 	Pressable,
 	ScrollView,
 	Text,
+	VStack,
 	View,
 	useDisclose,
 } from "native-base";
@@ -16,7 +19,24 @@ import ThemeEdit from "../../components/ThemeEdit";
 import LanguageEdit from "../../components/LanguageEdit";
 import { useNavigation } from "@react-navigation/native";
 import { MyNavigation } from "../../interfaces/natigationInterfaces";
+import UserInformationItem, {
+	UserInfo,
+} from "../../components/UserInformationItem";
 const Profile = () => {
+	const userInformations: UserInfo[] = [
+		{
+			title: "Username",
+			value: "@developer",
+		},
+		{
+			title: "Name & surname",
+			value: "TIOMELA JOU DANIEL",
+		},
+		{
+			title: "email",
+			value: "danieltiomelajou@gmail.com",
+		},
+	];
 	const { isOpen, onOpen, onClose } = useDisclose();
 	const navigation = useNavigation<MyNavigation>();
 	const {
@@ -87,7 +107,8 @@ const Profile = () => {
 			<HStack
 				alignItems={"center"}
 				justifyItems={"center"}
-				my={100}
+				mt={100}
+				mb={5}
 				p={4}
 				justifyContent="space-between">
 				{ProfileMenu.map((profile, index) => (
@@ -109,7 +130,7 @@ const Profile = () => {
 							rounded="md">
 							<Ionicons
 								color="white"
-								size={20}
+								size={25}
 								style={{
 									fontWeight: "bold",
 								}}
@@ -126,6 +147,19 @@ const Profile = () => {
 					</Pressable>
 				))}
 			</HStack>
+			<VStack p={4}>
+				{userInformations.map((user, index) => (
+					<View key={index}>
+						<UserInformationItem {...user} />
+					</View>
+				))}
+				{/* <Fab
+					// icon={<Ionicons name="log-out"  size={25} />}
+					icon={<Icon as={Ionicons} name="log-out" size="3xl" />}
+					marginBottom={"24"}
+					size={70}
+				/> */}
+			</VStack>
 			<ThemeEdit isOpen={isOpen} onClose={onClose} />
 			<LanguageEdit isOpen={languageIsOpen} onClose={languageOnClose} />
 		</ScrollView>

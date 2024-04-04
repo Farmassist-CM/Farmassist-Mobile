@@ -8,11 +8,12 @@ import Sensors from "../screens/Tab/Sensors";
 import PlanDiseases from "../screens/Tab/PlanDiseases";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useColorMode } from "native-base";
-import { BackHandler } from "react-native";
+import { BackHandler, Platform } from "react-native";
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
 	const { colorMode } = useColorMode();
+
 	useEffect(() => {
 		const backHandler = BackHandler.addEventListener(
 			"hardwareBackPress",
@@ -26,8 +27,11 @@ const TabNavigator = () => {
 				tabBarStyle: {
 					backgroundColor: colorMode == "dark" ? "black" : "white",
 					// paddingVertical: 10,
-					height: 100,
+					height: Platform.OS == "android" ? 60 : 100,
+					// alignItems: "center",
+					justifyContent: "center",
 				},
+
 				// tabBarActiveBackgroundColor: colorMode === "dark" ? "red" : "white",
 				// headerShown: false,
 				tabBarActiveTintColor: "#52C112",
