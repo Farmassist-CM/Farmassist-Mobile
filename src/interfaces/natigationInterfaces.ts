@@ -15,5 +15,6 @@ export type MyRouteStackParamList = {
 	CodeBarScan: undefined;
 	Settings: undefined;
 	EditProfile: undefined;
+	ChoosePreferences: undefined;
 };
 export type MyNavigation = NativeStackNavigationProp<MyRouteStackParamList>;

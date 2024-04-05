@@ -13,35 +13,61 @@ import TabNavigator from "./components/TabNavigator";
 import ScanBarCode from "./screens/ScanBarCode";
 import Settings from "./screens/Settings";
 import EditProfile from "./screens/EditProfile";
+import ChoosePreferences from "./screens/ChoosePreferences";
+import useSessionStore from "./store/SessionStore";
 
 const Stack = createNativeStackNavigator<MyRouteStackParamList>();
 const AppRouter = () => {
+	const { session } = useSessionStore();
 	return (
 		<NavigationContainer>
 			<Stack.Navigator>
-				<Stack.Group
-					screenOptions={{
-						headerShown: false,
-						animation: "slide_from_left",
-						headerBackButtonMenuEnabled: false,
-						gestureEnabled: false,
-					}}>
-					<Stack.Screen name="Splash" component={Splash} />
-					<Stack.Screen name="Home" component={Home} />
-					<Stack.Screen name="Login" component={Login} />
-				</Stack.Group>
-				<Stack.Screen name="Register" component={Register} />
-				<Stack.Screen
-					name="Tab"
-					component={TabNavigator}
-					options={{
-						headerShown: false,
-						gestureEnabled: false,
-					}}
-				/>
-				<Stack.Screen name="CodeBarScan" component={ScanBarCode} />
-				<Stack.Screen name="Settings" component={Settings} />
-				<Stack.Screen name="EditProfile" component={EditProfile} />
+				{session == null && (
+					<>
+						<Stack.Group
+							screenOptions={{
+								headerShown: false,
+								animation: "slide_from_left",
+								headerBackButtonMenuEnabled: false,
+								gestureEnabled: false,
+							}}>
+							<Stack.Screen name="Splash" component={Splash} />
+							<Stack.Screen
+								name="ChoosePreferences"
+								component={ChoosePreferences}
+							/>
+							<Stack.Screen name="Home" component={Home} />
+							<Stack.Screen name="Login" component={Login} />
+						</Stack.Group>
+						<Stack.Screen name="Register" component={Register} />
+					</>
+				)}
+				{session !== null && (
+					<>
+						<Stack.Screen
+							name="Tab"
+							component={TabNavigator}
+							options={{
+								headerShown: false,
+								gestureEnabled: false,
+							}}
+						/>
+						<Stack.Group
+							screenOptions={{
+								headerBackTitle: "Back",
+							}}>
+							<Stack.Screen name="CodeBarScan" component={ScanBarCode} />
+							<Stack.Screen name="Settings" component={Settings} />
+							<Stack.Screen
+								options={{
+									animation: "fade_from_bottom",
+								}}
+								name="EditProfile"
+								component={EditProfile}
+							/>
+						</Stack.Group>
+					</>
+				)}
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

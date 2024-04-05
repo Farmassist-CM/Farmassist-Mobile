@@ -1,3 +1,12 @@
 {
-	"signIn": "Se connecter"
+	"signIn": "Se connecter",
+	"invalid_email": "Entrez une adresse mail valide",
+	"email_required": "L'adresse mail est requise",
+	"invalid_password": "Le mote de passe est invalide",
+	"password_required": "Le mote de passe est requis",
+	"i_dont_have_account": "Vous n'avez pas de compte ?",
+	"sign_up": "S'inscrire",
+	"password": "Mot de passe",
+	"sign_in_with_google": "Se connecter avec google",
+	"continue": "Continuer"
 }

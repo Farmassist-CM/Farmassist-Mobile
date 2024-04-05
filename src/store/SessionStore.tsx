@@ -1,19 +1,20 @@
 /** @format */
 
 import { create } from "zustand";
+import { FireAuthUser } from "../interfaces/FireAuthUser";
 
 interface Session {
 	state: boolean;
 	id: string | null;
 }
 interface SessionState {
-	session: Session;
-	setLogin: (s: Session) => void;
+	session: FireAuthUser | null;
+	LoginUser: (s: FireAuthUser) => void;
 }
+
 const useSessionStore = create<SessionState>((set) => ({
-	session: {
-		id: null,
-		state: false,
-	},
-	setLogin: (s: Session) => set({ session: s }), // Correction ici
+	session: null,
+	LoginUser: (s: FireAuthUser) => set({ session: s }), // Correction ici
 }));
+
+export default useSessionStore;

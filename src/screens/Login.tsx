@@ -1,6 +1,6 @@
 /** @format */
 
-import { Text, BackHandler } from "react-native";
+import { BackHandler } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -20,22 +20,70 @@ WebBrowser.maybeCompleteAuthSession();
 
 import {
 	Button,
+	FormControl,
 	HStack,
 	IconButton,
 	Image,
 	Input,
 	ScrollView,
 	StatusBar,
+	Text,
 	TextField,
 	VStack,
+	WarningOutlineIcon,
 } from "native-base";
 import { IMAGES } from "../utils/images";
 import { useTranslation } from "react-i18next";
 import { makeRedirectUri } from "expo-auth-session";
 import { useNavigation } from "@react-navigation/native";
 import { MyNavigation } from "../interfaces/natigationInterfaces";
+import { useFormik } from "formik";
+import { LoginInformations } from "../interfaces/AuthInferfaces";
+import { LoginEmailPassworSchema as LoginEmailPasswordSchema } from "../utils/ValisationSchema";
+import FormControlErrorMessage from "../components/FormControlErrorMessage";
+import {} from "../firebase";
 
+import {
+	getAuth,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+} from "firebase/auth";
+import { FireAuthUser } from "../interfaces/FireAuthUser";
+import useSessionStore from "../store/SessionStore";
 const Login = () => {
+	const { LoginUser } = useSessionStore();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const auth = getAuth();
+	const formik = useFormik<LoginInformations>({
+		initialValues: {
+			email: "",
+			password: "",
+		},
+		validationSchema: LoginEmailPasswordSchema,
+		onSubmit: (values) => {
+			handleSubmit(values);
+		},
+	});
+	const handleSubmit = async (credentials: LoginInformations) => {
+		// console.log(credentials);
+		setIsLoading(true);
+		signInWithEmailAndPassword(auth, credentials.email, credentials.password)
+			.then(async (userCredential) => {
+				// Signed in
+				const user = userCredential.user as unknown as FireAuthUser;
+				LoginUser(user);
+
+				// onChangeLoggedInUser(user.email);
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				console.log(error);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
+	};
 	const navigation = useNavigation<MyNavigation>();
 	const [userData, setuserData] = useState({});
 	const redirectUri = makeRedirectUri({
@@ -78,15 +126,8 @@ const Login = () => {
 	};
 	return (
 		<ScrollView
-			// backgroundColor={"primary.500"}
 			_light={{ backgroundColor: "white" }}
-			_dark={{ backgroundColor: "red.50" }}
-			// minHeight={Dimensions.get("screen").height}
-			// _web={{ minHeight: Dimensions.get("window").height }}
-			// style={{
-			// 	height: Dimensions.get("window").height,
-			// }}
-		>
+			_dark={{ backgroundColor: "dark.100" }}>
 			<VStack
 				style={{
 					height: 300,
@@ -100,51 +141,87 @@ const Login = () => {
 			</VStack>
 			<VStack
 				bgColor="white"
+				_dark={{
+					bgColor: "dark.200",
+				}}
 				borderTopRadius={40}
-				// justifyContent="space-between"
 				padding="10">
 				<VStack>
-					<Input
-						py={"3"}
-						// borderWidth="0"
-						backgroundColor="muted.100"
-						placeholder="email"
-						// errorMessage="dev"
-						fontSize="md"
-						keyboardType="email-address"
-						_input={{ height: "12" }}
-						focusOutlineColor="primary.100"
-					/>
-					<Input
-						py={"3"}
-						my={4}
-						// borderWidth="0"
-						backgroundColor="muted.100"
-						placeholder="email"
-						// errorMessage="dev"
-						fontSize="md"
-						keyboardType="email-address"
-						_input={{ height: "12" }}
-						focusOutlineColor="primary.100"
-						secureTextEntry={passwordHide}
-						// fontSize="md"
-						InputRightElement={
-							<IconButton
-								onPress={() => setPasswordHide(!passwordHide)}
-								variant="ghost"
-								display="flex"
-								justifyContent="center"
-								alignItems="center">
-								<Ionicons
-									name={passwordHide ? "eye" : "eye-off"}
-									color="green"
-									size={20}
-								/>
-							</IconButton>
-						}
-						// _input={{ height: "12" }}
-					/>
-					<Button rounded="full" size="lg">
+					<FormControl isInvalid={formik.errors?.email ? true : false} my={3}>
+						<FormControl.Label>Email</FormControl.Label>
+						<Input
+							py={"3"}
+							backgroundColor="muted.100"
+							placeholder="exemple@example.com"
+							fontSize="md"
+							keyboardType="email-address"
+							_input={{ height: "12" }}
+							focusOutlineColor="primary.100"
+							onChangeText={formik.handleChange("email")}
+							onBlur={formik.handleBlur("email")}
+							value={formik.values.email}
+							_dark={{
+								_input: {
+									bg: "dark.100",
+								},
+							}}
+						/>
+						<FormControlErrorMessage
+							message={formik.errors.email?.toString() || ""}
+						/>
+					</FormControl>
+
+					<FormControl
+						isInvalid={formik.errors?.password ? true : false}
+						my={3}>
+						<FormControl.Label>{t("password")}</FormControl.Label>
+						<Input
+							backgroundColor="muted.100"
+							placeholder="****************"
+							fontSize="md"
+							keyboardType="email-address"
+							_input={{ height: "12" }}
+							focusOutlineColor="primary.100"
+							secureTextEntry={passwordHide}
+							onChangeText={formik.handleChange("password")}
+							onBlur={formik.handleBlur("password")}
+							value={formik.values.password}
+							InputRightElement={
+								<IconButton
+									_dark={{
+										bg: "dark.100",
+										h: "full",
+										rounded: "none",
+									}}
+									onPress={() => setPasswordHide(!passwordHide)}
+									variant="ghost"
+									display="flex"
+									justifyContent="center"
+									alignItems="center">
+									<Ionicons
+										name={passwordHide ? "eye" : "eye-off"}
+										color="green"
+										size={20}
+									/>
+								</IconButton>
+							}
+							_dark={{
+								_input: {
+									bg: "dark.100",
+								},
+							}}
+						/>
+						<FormControlErrorMessage
+							message={formik.errors.password?.toString() || ""}
+						/>
+					</FormControl>
+
+					<Button
+						isLoading={isLoading}
+						onPress={() => formik.handleSubmit()}
+						rounded="full"
+						size="lg"
+						my={5}>
 						{t("signIn")}
 					</Button>
 					<Button
@@ -153,7 +230,7 @@ const Login = () => {
 						variant="outline"
 						marginTop="10"
 						size="lg">
-						Sign In with Google
+						{t("sign_in_with_google")}
 					</Button>
 				</VStack>
 				<HStack
@@ -165,9 +242,9 @@ const Login = () => {
 					}}
 					alignItems="center"
 					justifyContent="center">
-					<Text>{"You don't have account ?"}</Text>
+					<Text>{t("i_dont_have_account")}</Text>
 					<Button onPress={() => navigation.push("Register")} variant="link">
-						Sign Up
+						{t("sign_up")}
 					</Button>
 				</HStack>
 			</VStack>

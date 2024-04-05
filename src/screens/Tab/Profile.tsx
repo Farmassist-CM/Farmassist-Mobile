@@ -1,11 +1,9 @@
 /** @format */
-import React, { useState } from "react";
+import React from "react";
 import {
 	Avatar,
 	Box,
-	Fab,
 	HStack,
-	Icon,
 	Pressable,
 	ScrollView,
 	Text,
@@ -22,11 +20,13 @@ import { MyNavigation } from "../../interfaces/natigationInterfaces";
 import UserInformationItem, {
 	UserInfo,
 } from "../../components/UserInformationItem";
+import useSessionStore from "../../store/SessionStore";
 const Profile = () => {
+	const { session } = useSessionStore();
 	const userInformations: UserInfo[] = [
 		{
 			title: "Username",
-			value: "@developer",
+			value: session?.displayName || "",
 		},
 		{
 			title: "Name & surname",
@@ -34,7 +34,7 @@ const Profile = () => {
 		},
 		{
 			title: "email",
-			value: "danieltiomelajou@gmail.com",
+			value: session?.email || "",
 		},
 	];
 	const { isOpen, onOpen, onClose } = useDisclose();
@@ -83,6 +83,7 @@ const Profile = () => {
 						end: [1, 0],
 					},
 				}}
+				// bg={"amber.400"}
 				p={20}
 				_text={{
 					fontSize: "md",
@@ -101,7 +102,7 @@ const Profile = () => {
 					size={"2xl"}
 					bg="green.500"
 					source={{
-						uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+						uri: session?.photoURL,
 					}}></Avatar>
 			</HStack>
 			<HStack

@@ -11,7 +11,7 @@ const Splash = () => {
 	const navigation = useNavigation<MyNavigation>();
 	useEffect(() => {
 		setTimeout(() => {
-			navigation.replace("Home");
+			navigation.replace("ChoosePreferences");
 		}, 2000);
 	}, []);
 	return (

@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import "intl-pluralrules";
 import "./src/i18n";
+import "./src/firebase";
 
 import AppRouter from "./src/AppRouter";
 
@@ -12,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { customTheme } from "./src/utils/theme";
 import { LinearGradient } from "expo-linear-gradient";
+
 const config = {
 	dependencies: {
 		"linear-gradient": LinearGradient,
@@ -35,7 +37,7 @@ export default function App() {
 	}, []);
 
 	return (
-		<NativeBaseProvider config={config} theme={customTheme}>
+		<NativeBaseProvider theme={customTheme} config={config}>
 			<AppRouter />
 		</NativeBaseProvider>
 	);
